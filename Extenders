@@ -1,0 +1,239 @@
+import React from 'react';
+import { Bar, Line, BarChart, LineChart, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+
+const MotilityAnalysis = () => {
+  // Process and organize the data
+  const rawData = [
+    // Day 1
+    {day: 1, extender: "Tris egg yolk", donor: "6", total: 39.95, progressive: 39.95, rapid: 38.77, slow: 1.18, immotile: 60.05},
+    {day: 1, extender: "Tris egg yolk", donor: "4", total: 64.2, progressive: 64.2, rapid: 62.83, slow: 1.37, immotile: 35.8},
+    {day: 1, extender: "Tris egg yolk", donor: "2", total: 56.89, progressive: 56.73, rapid: 54.7, slow: 2.03, immotile: 43.11},
+    {day: 1, extender: "Nanoemulsion 1x", donor: "6", total: 64.99, progressive: 64.87, rapid: 59.07, slow: 5.8, immotile: 35.01},
+    {day: 1, extender: "Nanoemulsion 1x", donor: "4", total: 57.54, progressive: 57.4, rapid: 54.6, slow: 2.81, immotile: 42.46},
+    {day: 1, extender: "Nanoemulsion 1x", donor: "2", total: 49.35, progressive: 47.43, rapid: 36.56, slow: 10.88, immotile: 50.65},
+    {day: 1, extender: "Nanoemulsion 2x", donor: "6", total: 60.58, progressive: 59.86, rapid: 52.86, slow: 6.99, immotile: 39.42},
+    {day: 1, extender: "Nanoemulsion 2x", donor: "4", total: 64.79, progressive: 63.39, rapid: 57.84, slow: 5.55, immotile: 35.21},
+    {day: 1, extender: "Nanoemulsion 2x", donor: "2", total: 55.99, progressive: 55.32, rapid: 43.48, slow: 11.84, immotile: 44.01},
+    {day: 1, extender: "Andromed", donor: "4", total: 61.53, progressive: 60.65, rapid: 50.38, slow: 10.27, immotile: 38.47},
+    {day: 1, extender: "Andromed", donor: "6", total: 44.73, progressive: 44.01, rapid: 29.75, slow: 14.26, immotile: 55.27},
+    
+    // Day 2
+    {day: 2, extender: "Tris egg yolk", donor: "N/A", total: 64.70, progressive: 64.70, rapid: 63.62, slow: 1.08, immotile: 35.30},
+    {day: 2, extender: "Tris egg yolk", donor: "6", total: 65.79, progressive: 65.71, rapid: 64.08, slow: 1.64, immotile: 34.21},
+    {day: 2, extender: "Tris egg yolk", donor: "4", total: 73.52, progressive: 73.27, rapid: 70.75, slow: 2.51, immotile: 26.48},
+    {day: 2, extender: "Nanoemulsion 1x", donor: "2", total: 65.32, progressive: 64.38, rapid: 55.53, slow: 8.85, immotile: 34.68},
+    {day: 2, extender: "Nanoemulsion 1x", donor: "6", total: 58.55, progressive: 58.55, rapid: 54.75, slow: 3.80, immotile: 41.45},
+    {day: 2, extender: "Nanoemulsion 1x", donor: "4", total: 60.73, progressive: 60.25, rapid: 52.11, slow: 8.14, immotile: 39.27},
+    {day: 2, extender: "Nanoemulsion 2x", donor: "2", total: 61.90, progressive: 61.80, rapid: 59.29, slow: 2.52, immotile: 38.10},
+    {day: 2, extender: "Nanoemulsion 2x", donor: "6", total: 60.71, progressive: 60.02, rapid: 56.20, slow: 3.82, immotile: 39.29},
+    {day: 2, extender: "Nanoemulsion 2x", donor: "4", total: 44.01, progressive: 42.96, rapid: 35.21, slow: 7.75, immotile: 55.99},
+    {day: 2, extender: "Andromed", donor: "2", total: 64.98, progressive: 62.79, rapid: 20.42, slow: 42.37, immotile: 35.02},
+    {day: 2, extender: "Andromed", donor: "4", total: 51.73, progressive: 50.27, rapid: 29.11, slow: 21.15, immotile: 48.27},
+    
+    // Day 3
+    {day: 3, extender: "Tris egg yolk", donor: "I0402006", total: 59.32, progressive: 59.25, rapid: 58.93, slow: 0.33, immotile: 40.68},
+    {day: 3, extender: "Tris egg yolk", donor: "I0402004", total: 56.43, progressive: 56.43, rapid: 54.78, slow: 1.65, immotile: 43.57},
+    {day: 3, extender: "Tris egg yolk", donor: "I04223002", total: 68.30, progressive: 68.30, rapid: 66.54, slow: 1.77, immotile: 31.70},
+    {day: 3, extender: "Nanoemulsion 1x", donor: "I0402006", total: 63.50, progressive: 61.77, rapid: 51.99, slow: 9.77, immotile: 36.50},
+    {day: 3, extender: "Nanoemulsion 1x", donor: "I0402004", total: 56.40, progressive: 55.85, rapid: 48.72, slow: 7.13, immotile: 43.60},
+    {day: 3, extender: "Nanoemulsion 1x", donor: "I04223002", total: 53.69, progressive: 52.75, rapid: 39.87, slow: 12.89, immotile: 46.31},
+    {day: 3, extender: "Nanoemulsion 2x", donor: "I0402006", total: 62.72, progressive: 61.61, rapid: 52.93, slow: 8.68, immotile: 37.28},
+    {day: 3, extender: "Nanoemulsion 2x", donor: "I0402004", total: 57.80, progressive: 57.65, rapid: 46.87, slow: 10.79, immotile: 42.20},
+    {day: 3, extender: "Nanoemulsion 2x", donor: "I04223002", total: 53.74, progressive: 51.56, rapid: 28.23, slow: 23.33, immotile: 46.26},
+    {day: 3, extender: "Andromed", donor: "I0402004", total: 23.31, progressive: 16.02, rapid: 0.20, slow: 15.82, immotile: 76.69},
+    {day: 3, extender: "Andromed", donor: "I0402006", total: 49.51, progressive: 49.07, rapid: 34.32, slow: 14.76, immotile: 50.49},
+    
+    // Day 4 - with corrected immotile values
+    {day: 4, extender: "Tris egg yolk", donor: "I04223004", total: 68.34, progressive: 68.34, rapid: 63.64, slow: 4.71, immotile: 31.66},
+    {day: 4, extender: "Tris egg yolk", donor: "I04223006", total: 73.7, progressive: 73.49, rapid: 72.45, slow: 1.04, immotile: 26.3},
+    {day: 4, extender: "Tris egg yolk", donor: "I04223002", total: 72.99, progressive: 72.92, rapid: 70.06, slow: 2.86, immotile: 27.01},
+    {day: 4, extender: "Nanoliposome 1x", donor: "I04223004", total: 63.48, progressive: 62.99, rapid: 49.21, slow: 13.78, immotile: 36.52},
+    {day: 4, extender: "Nanoliposome 1x", donor: "I04223006", total: 61.53, progressive: 61.09, rapid: 54, slow: 7.09, immotile: 38.47},
+    {day: 4, extender: "Nanoliposome 1x", donor: "I04223002", total: 61, progressive: 57.46, rapid: 39.95, slow: 17.52, immotile: 39},
+    {day: 4, extender: "Nanoliposome 2x", donor: "I04223004", total: 56.54, progressive: 54.25, rapid: 18.36, slow: 35.89, immotile: 43.46},
+    {day: 4, extender: "Nanoliposome 2x", donor: "I04223006", total: 56.08, progressive: 55.71, rapid: 48.16, slow: 7.56, immotile: 43.92},
+    {day: 4, extender: "Nanoliposome 2x", donor: "I04223002", total: 43.17, progressive: 39.86, rapid: 16.65, slow: 23.2, immotile: 56.83},
+    {day: 4, extender: "Andromed", donor: "I04223004", total: 12.02, progressive: 3.25, rapid: 0, slow: 3.25, immotile: 87.98},
+    {day: 4, extender: "Andromed", donor: "I04223006", total: 53.61, progressive: 48.55, rapid: 9.04, slow: 39.5, immotile: 46.39}
+  ];
+
+  // Calculate average values for each day and extender type
+  const getAveragesByExtenderAndDay = () => {
+    const extenderTypes = ["Tris egg yolk", "Nanoemulsion 1x", "Nanoemulsion 2x", "Andromed"];
+    const days = [1, 2, 3, 4];
+    
+    const result = [];
+    
+    days.forEach(day => {
+      extenderTypes.forEach(extender => {
+        // Filter data for current day and extender
+        let filteredData;
+        if (day === 4) {
+          // For day 4, handle "Nanoliposome" as "Nanoemulsion"
+          const searchExtender = extender.replace("Nanoemulsion", "Nanoliposome");
+          filteredData = rawData.filter(item => item.day === day && 
+            (item.extender === extender || item.extender === searchExtender));
+        } else {
+          filteredData = rawData.filter(item => item.day === day && item.extender === extender);
+        }
+        
+        if (filteredData.length > 0) {
+          // Calculate averages
+          const avgTotal = filteredData.reduce((sum, item) => sum + item.total, 0) / filteredData.length;
+          const avgProgressive = filteredData.reduce((sum, item) => sum + item.progressive, 0) / filteredData.length;
+          const avgRapid = filteredData.reduce((sum, item) => sum + item.rapid, 0) / filteredData.length;
+          const avgSlow = filteredData.reduce((sum, item) => sum + item.slow, 0) / filteredData.length;
+          const avgImmotile = filteredData.reduce((sum, item) => sum + item.immotile, 0) / filteredData.length;
+          
+          result.push({
+            day: day,
+            extender: extender,
+            avgTotal: avgTotal.toFixed(2),
+            avgProgressive: avgProgressive.toFixed(2),
+            avgRapid: avgRapid.toFixed(2),
+            avgSlow: avgSlow.toFixed(2),
+            avgImmotile: avgImmotile.toFixed(2)
+          });
+        }
+      });
+    });
+    
+    return result;
+  };
+
+  const averagedData = getAveragesByExtenderAndDay();
+
+  // Prepare data for time series graphs
+  const prepareTimeSeriesData = (motilityType) => {
+    const dataPoints = [];
+    const days = [1, 2, 3, 4];
+    
+    days.forEach(day => {
+      const dayData = {
+        day: `Day ${day}`,
+      };
+      
+      averagedData.filter(item => item.day === day).forEach(item => {
+        const extenderKey = item.extender.replace(" ", "_").replace(" ", "_");
+        dayData[extenderKey] = parseFloat(item[motilityType]);
+      });
+      
+      dataPoints.push(dayData);
+    });
+    
+    return dataPoints;
+  };
+
+  // Generate data for the five motility metrics
+  const totalMotilityData = prepareTimeSeriesData('avgTotal');
+  const progressiveMotilityData = prepareTimeSeriesData('avgProgressive');
+  const rapidMotilityData = prepareTimeSeriesData('avgRapid');
+  const slowMotilityData = prepareTimeSeriesData('avgSlow');
+  const immotileSpermData = prepareTimeSeriesData('avgImmotile');
+
+  // Generate line colors for different extenders
+  const lineColors = {
+    Tris_egg_yolk: "#8884d8",
+    Nanoemulsion_1x: "#82ca9d",
+    Nanoemulsion_2x: "#ffc658",
+    Andromed: "#ff8042"
+  };
+
+  return (
+    <div className="flex flex-col space-y-8">
+      <h1 className="text-2xl font-bold text-center">Sperm Motility Analysis Across Different Extenders (Revised Data)</h1>
+      
+      {/* Total Motility Graph */}
+      <div className="p-4 bg-white rounded shadow">
+        <h2 className="text-xl font-semibold mb-4">Total Motility Over Time</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={totalMotilityData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="day" />
+            <YAxis label={{ value: 'Total Motility (%)', angle: -90, position: 'insideLeft' }} />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="Tris_egg_yolk" stroke={lineColors.Tris_egg_yolk} name="Tris egg yolk" />
+            <Line type="monotone" dataKey="Nanoemulsion_1x" stroke={lineColors.Nanoemulsion_1x} name="Nanoemulsion 1x" />
+            <Line type="monotone" dataKey="Nanoemulsion_2x" stroke={lineColors.Nanoemulsion_2x} name="Nanoemulsion 2x" />
+            <Line type="monotone" dataKey="Andromed" stroke={lineColors.Andromed} name="Andromed" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+      
+      {/* Progressive Motility Graph */}
+      <div className="p-4 bg-white rounded shadow">
+        <h2 className="text-xl font-semibold mb-4">Progressive Motility Over Time</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={progressiveMotilityData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="day" />
+            <YAxis label={{ value: 'Progressive Motility (%)', angle: -90, position: 'insideLeft' }} />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="Tris_egg_yolk" stroke={lineColors.Tris_egg_yolk} name="Tris egg yolk" />
+            <Line type="monotone" dataKey="Nanoemulsion_1x" stroke={lineColors.Nanoemulsion_1x} name="Nanoemulsion 1x" />
+            <Line type="monotone" dataKey="Nanoemulsion_2x" stroke={lineColors.Nanoemulsion_2x} name="Nanoemulsion 2x" />
+            <Line type="monotone" dataKey="Andromed" stroke={lineColors.Andromed} name="Andromed" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+      
+      {/* Rapid Motility Graph */}
+      <div className="p-4 bg-white rounded shadow">
+        <h2 className="text-xl font-semibold mb-4">Rapid Motility Over Time</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={rapidMotilityData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="day" />
+            <YAxis label={{ value: 'Rapid Motility (%)', angle: -90, position: 'insideLeft' }} />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="Tris_egg_yolk" stroke={lineColors.Tris_egg_yolk} name="Tris egg yolk" />
+            <Line type="monotone" dataKey="Nanoemulsion_1x" stroke={lineColors.Nanoemulsion_1x} name="Nanoemulsion 1x" />
+            <Line type="monotone" dataKey="Nanoemulsion_2x" stroke={lineColors.Nanoemulsion_2x} name="Nanoemulsion 2x" />
+            <Line type="monotone" dataKey="Andromed" stroke={lineColors.Andromed} name="Andromed" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+      
+      {/* Slow Motility Graph */}
+      <div className="p-4 bg-white rounded shadow">
+        <h2 className="text-xl font-semibold mb-4">Slow Motility Over Time</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={slowMotilityData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="day" />
+            <YAxis label={{ value: 'Slow Motility (%)', angle: -90, position: 'insideLeft' }} />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="Tris_egg_yolk" stroke={lineColors.Tris_egg_yolk} name="Tris egg yolk" />
+            <Line type="monotone" dataKey="Nanoemulsion_1x" stroke={lineColors.Nanoemulsion_1x} name="Nanoemulsion 1x" />
+            <Line type="monotone" dataKey="Nanoemulsion_2x" stroke={lineColors.Nanoemulsion_2x} name="Nanoemulsion 2x" />
+            <Line type="monotone" dataKey="Andromed" stroke={lineColors.Andromed} name="Andromed" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+      
+      {/* Immotile Sperm Graph */}
+      <div className="p-4 bg-white rounded shadow">
+        <h2 className="text-xl font-semibold mb-4">Immotile Sperm Over Time</h2>
+        <ResponsiveContainer width="100%" height={300}>
+          <LineChart data={immotileSpermData}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="day" />
+            <YAxis label={{ value: 'Immotile Sperm (%)', angle: -90, position: 'insideLeft' }} />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="Tris_egg_yolk" stroke={lineColors.Tris_egg_yolk} name="Tris egg yolk" />
+            <Line type="monotone" dataKey="Nanoemulsion_1x" stroke={lineColors.Nanoemulsion_1x} name="Nanoemulsion 1x" />
+            <Line type="monotone" dataKey="Nanoemulsion_2x" stroke={lineColors.Nanoemulsion_2x} name="Nanoemulsion 2x" />
+            <Line type="monotone" dataKey="Andromed" stroke={lineColors.Andromed} name="Andromed" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
+    </div>
+  );
+};
+
+export default MotilityAnalysis;
